@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using System;
+using System.Linq;
+using NUnit.Framework;
 
 namespace Engine
 {
@@ -42,27 +44,30 @@ namespace Engine
     {
         public static string Order(Drinks drink, int numberOfSugar)
         {
-            string str = "";
+            var str = DrinkToString(drink);
+            var sugar = numberOfSugar > 0 ? numberOfSugar.ToString() : string.Empty;
+            var touillette = numberOfSugar > 0 ? 0.ToString() : string.Empty;
+            return string.Format("{0}:{1}:{2}", str, sugar,touillette);
+            
+        }
+
+        private static string DrinkToString(Drinks drink)
+        {
             switch (drink)
             {
                 case Drinks.Tea:
-                    str += "T";
-                    break;
+                    return "T";
                 case Drinks.Chocolate:
-                    str += "H";
-                    break;
+                    return "H";
                 case Drinks.Coffee:
-                    str += "C";
-                    break;
+                    return "C";
+                default:
+                    throw new UnknownDrinkException();
             }
-            str += ":";
-            if (numberOfSugar > 0)
-                str += numberOfSugar;
-            str += ":";
-            if (numberOfSugar > 0)
-                str += "0";
-
-            return str;
         }
+    }
+
+    internal class UnknownDrinkException : Exception
+    {
     }
 }
