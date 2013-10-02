@@ -21,6 +21,12 @@ namespace Engine
             Assert.That(result, Is.EqualTo("H::"));
         }
 
+        [Test]
+        public void Should_be_able_to_order_a_coffee_with_two_sugars()
+        {
+            string result = Glop.Order(Drinks.Coffee, 2);
+            Assert.That(result, Is.EqualTo("C:2:0"));
+        }
         // ReSharper restore InconsistentNaming
 
     }
@@ -28,7 +34,8 @@ namespace Engine
     public enum Drinks
     {
         Chocolate,
-        Tea
+        Tea,
+        Coffee
     }
 
     public class Glop
@@ -38,11 +45,14 @@ namespace Engine
             string str = "";
             switch (drink)
             {
-                    case Drinks.Tea:
+                case Drinks.Tea:
                     str += "T";
                     break;
-                    case Drinks.Chocolate:
+                case Drinks.Chocolate:
                     str += "H";
+                    break;
+                case Drinks.Coffee:
+                    str += "C";
                     break;
             }
             str += ":";
